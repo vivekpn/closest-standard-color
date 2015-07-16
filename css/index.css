@@ -1,16 +1,16 @@
-.color{
+.color {
     width: 50px;
     height: 50px;
     border: 2px solid;
-    border-radius:6px;
-    display:inline-block;
+    border-radius: 6px;
+    display: inline-block;
     background-color: #FF731B;
 }
 
-.status{
+.status {
     font-size: xx-large;
 }
 
-.input-texts{
+.input-texts {
     font-size: x-large;
 }
