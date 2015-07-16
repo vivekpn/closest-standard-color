@@ -1,7 +1,4 @@
-var calculateColorVariationAndUpdateStatus = function () {
-    var result = calculateColorVariation($('#left-picker').css('background-color'),$('#right-picker').css('background-color'));
-    updateStatusDivision(result);
-};
+"use strict";
 
 $(document).ready(function(){
     $('.color').colpick({
@@ -15,6 +12,11 @@ $(document).ready(function(){
         }});
     calculateColorVariationAndUpdateStatus();
 });
+
+var calculateColorVariationAndUpdateStatus = function () {
+    var result = calculateColorVariation($('#left-picker').css('background-color'),$('#right-picker').css('background-color'));
+    updateStatusDivision(result);
+};
 
 var calculateColorVariation = function(rgb1,rgb2){
     var left_color= parseRgb(rgb1);
@@ -38,8 +40,9 @@ var updateStatusDivision = function(status){
 
 var findColorDifference = function(color1,color2){
     var sumOfsquaresOfDifferences = 0;
+    var SCALING_CONSTANT = 2.2641187;
     sumOfsquaresOfDifferences+= Math.pow((color1.red - color2.red),2);
     sumOfsquaresOfDifferences+= Math.pow((color1.green - color2.green),2);
     sumOfsquaresOfDifferences+= Math.pow((color1.blue - color2.blue),2);
-    return Math.sqrt(sumOfsquaresOfDifferences);
+    return Math.round(Math.sqrt(sumOfsquaresOfDifferences)* SCALING_CONSTANT);
 };
