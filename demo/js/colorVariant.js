@@ -1,18 +1,22 @@
 "use strict";
-
+var data;
 $(document).ready(function () {
+    $.getJSON("js/data.json",function(result){data = result});
     $('.color').colpick({
         colorScheme: 'dark',
         layout: 'rgbhex',
         color: 'ff8800',
         onSubmit: function (hsb, hex, rgb, el) {
-            $(el).css('background-color', '#' + hex);
+            $(el).css('background-color', rgb);
             $(el).colpickHide();
             calculateColorVariationAndUpdateStatus();
+            $('.nearest-standard-color.status.'+ el.id).text(getNearestStandardColor(parseRgb($(el).css('background-color'))));
         }
     });
     calculateColorVariationAndUpdateStatus();
+    var colorVariant = this;
 });
+
 
 var calculateColorVariationAndUpdateStatus = function () {
     var result = calculateColorVariation($('#left-picker').css('background-color'), $('#right-picker').css('background-color'));
@@ -46,4 +50,19 @@ var findColorDifference = function (color1, color2) {
     sumOfsquaresOfDifferences += Math.pow((color1.green - color2.green), 2);
     sumOfsquaresOfDifferences += Math.pow((color1.blue - color2.blue), 2);
     return Math.round(Math.sqrt(sumOfsquaresOfDifferences) * SCALING_CONSTANT);
+};
+
+var getNearestStandardColor = function(color){
+    var min = Infinity;
+    var nearestColor = "";
+    if(data) {
+        for (var index = 0; index < data.length; index++) {
+            var colorDiff = findColorDifference(color, data[index]);
+            if (min > colorDiff) {
+                min = colorDiff;
+                nearestColor = data[index].label;
+            }
+        }
+        return nearestColor;
+    }
 };
