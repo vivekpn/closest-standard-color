@@ -7,7 +7,7 @@ $(document).ready(function () {
         layout: 'rgbhex',
         color: 'ff8800',
         onSubmit: function (hsb, hex, rgb, el) {
-            $(el).css('background-color', rgb);
+            $(el).css('background-color', '#'+hex);
             $(el).colpickHide();
             calculateColorVariationAndUpdateStatus();
             $('.nearest-standard-color.status.'+ el.id).text(getNearestStandardColor(parseRgb($(el).css('background-color'))));
