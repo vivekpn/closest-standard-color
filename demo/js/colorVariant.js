@@ -3,12 +3,13 @@ var data;
 $(document).ready(function () {
     $.getJSON("js/data.json",function(result){data = result});
     $('.color').colpick({
+        flat:true,
         colorScheme: 'dark',
         layout: 'rgbhex',
         color: 'ff8800',
-        onSubmit: function (hsb, hex, rgb, el) {
+        submit:0,
+        onChange: function (hsb, hex, rgb, el) {
             $(el).css('background-color', '#'+hex);
-            $(el).colpickHide();
             calculateColorVariationAndUpdateStatus();
             $('.nearest-standard-color.status.'+ el.id).text(getNearestStandardColor(parseRgb($(el).css('background-color'))));
         }
